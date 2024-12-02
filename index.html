@@ -54,7 +54,7 @@
 <body>
     <h1>座位查找程序</h1>
     <label for="nameInput">输入名字：</label>
-    <input type="text" id="nameInput" placeholder="请输入名字">
+    <input type="text" id="nameInput" placeholder="请输入名字" onkeypress="handleKeyPress(event)">
     <button onclick="findSeatByName()">查找座位</button>
     
 
@@ -221,6 +221,11 @@
         function clearHighlights() {
             for (let seat in seatMap) {
                 seatMap[seat].classList.remove("selected");
+            }
+        }
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                findSeatByName();
             }
         }
     </script>
