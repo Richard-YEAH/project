@@ -194,6 +194,13 @@
                 const seatDiv = seatMap[seatId];
                 if (seatDiv) {
                     seatDiv.classList.add("selected");
+
+                    // 获取组信息
+                    const groupDiv = seatDiv.closest(".group"); 
+                    if (groupDiv) {
+                        groupDiv.scrollIntoView({ behavior: "smooth", block: "center" }); // 滚动到组
+                    }
+                    
                     alert(`姓名：${record.name}, 座位：${seatId}`);
                 }
             } else {
