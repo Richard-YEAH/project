@@ -148,12 +148,21 @@
         // 动态生成座位图
 function generateGroupSeats(groupNumber) {
     const seatingChart = document.getElementById("seatingChart");
-    seatingChart.innerHTML = ""; // 清空现有座位表
+    if (!seatingChart) {
+        console.error("未找到 #seatingChart 容器！");
+        return;
+    }
 
+    const groupTitle = document.getElementById("groupTitle");
+    if (!groupTitle) {
+        console.error("未找到 #groupTitle 容器！");
+        return;
+    }
+
+    seatingChart.innerHTML = ""; // 清空现有座位表
     const groupDiv = document.createElement("div");
     groupDiv.className = "group";
 
-    const groupTitle = document.getElementById("groupTitle");
     groupTitle.textContent = `第 ${groupNumber} 组座位图`; // 动态更新标题
 
     for (let r = 1; r <= rowsPerGroup; r++) {
@@ -165,22 +174,23 @@ function generateGroupSeats(groupNumber) {
             const seatDiv = document.createElement("div");
             seatDiv.className = "seat";
             seatDiv.id = seatId;
-            seatDiv.textContent = ""; // 不显示座位的坐标
+            seatDiv.textContent = ""; // 初始不显示座位号
             rowDiv.appendChild(seatDiv);
 
             // 保存到座位映射
-seatMap[seatId] = seatDiv;
+            seatMap[seatId] = seatDiv;
         }
-
-    groupDiv.appendChild(rowDiv);
+        groupDiv.appendChild(rowDiv);
     }
 
-seatingChart.appendChild(groupDiv);
+    seatingChart.appendChild(groupDiv);
 }
+
+
         // 页面加载时默认生成第 1 组座位表
-        document.addEventListener("DOMContentLoaded", () => {
-            generateGroupSeats(1); // 默认显示第 1 组
-        });
+document.addEventListener("DOMContentLoaded", () => {
+    generateGroupSeats(1); // 默认显示第 1 组
+});
 
         // 按名字查找座位并高亮
 function findSeatByName() {
