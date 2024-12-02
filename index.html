@@ -11,16 +11,16 @@
         }
         .seating-chart {
             display: flex;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            gap: 25px;
+            flex-wrap: nowrap; /* 横向排列，不换行 */
+            overflow-x: auto; /* 添加横向滚动条 */
+            gap: 10px; /* 组之间的间距 */
         }
         .group {
             border: 1px solid #ccc;
             padding: 10px;
-            min-width: 180px;
+            min-width: 200px; /* 保证每组有足够的宽度 */
             display: flex;
-            flex-direction: column;
+            flex-direction: column; /* 垂直排列 */
             align-items: center;
         }
         .group-title {
@@ -32,21 +32,21 @@
             display: flex;
             margin-bottom: 10px;
             justify-content: center;
-            gap: 5px;
+            gap: 5px; /* 座位之间的间距 */
         }
         .seat {
-            width: 15px;
-            height: 10px;
+            width: 20px; /* 减小座位宽度 */
+            height: 30px; /* 减小座位高度 */
             border: 1px solid #ccc;
             display: flex;
             align-items: center;
             justify-content: center;
             background-color: #f0f0f0;
             cursor: pointer;
-            font-size: 0px;
+            font-size: 10px; /* 减小字体大小 */
         }
         .seat.selected {
-            background-color: #00205B;
+            background-color: #32CD32; /* 选中座位颜色 */
             color: white;
         }
     </style>
@@ -56,18 +56,22 @@
     <label for="nameInput">输入名字：</label>
     <input type="text" id="nameInput" placeholder="请输入名字">
     <button onclick="findSeatByName()">查找座位</button>
+    
+    <label for="seatInput">输入座位编号（如 1-3-7）：</label>
+    <input type="text" id="seatInput" placeholder="请输入座位编号">
+    <button onclick="findSeatByNumber()">查找座位</button>
 
-    <h2 id="groupTitle"></h2>
+    <h2>座位示意图</h2>
     <div id="seatingChart" class="seating-chart"></div>
 
     <script>
+        const groups = 6; // 组数
         const rowsPerGroup = 5; // 每组排数
         const seatsPerRow = 9; // 每排座位数
-        const seatMap = {}; // 用于存储座位映射
 
         // 示例数据：名字和座位号对应
         const seatData = [
-            { name: "王绿洲", seat: "3-1-1" },
+             { name: "王绿洲", seat: "3-1-1" },
             { name: "孟令超", seat: "3-1-2" },
             { name: "于昊", seat: "3-1-3" },
             { name: "陈龙林", seat: "3-1-4" },
@@ -146,79 +150,73 @@
         ];
 
         // 动态生成座位图
-        function generateGroupSeats(groupNumber) {
-            const seatingChart = document.getElementById("seatingChart");
-            if (!seatingChart) {
-                console.error("未找到 #seatingChart 容器！");
-                return;
-            }
+        const seatingChart = document.getElementById("seatingChart");
+        const seatMap = {}; // 记录每个座位的 HTML 元素，便于查找和更新
 
-            const groupTitle = document.getElementById("groupTitle");
-            if (!groupTitle) {
-                console.error("未找到 #groupTitle 容器！");
-                return;
-            }
-
-            seatingChart.innerHTML = ""; // 清空现有座位表
+        for (let g = 1; g <= groups; g++) {
             const groupDiv = document.createElement("div");
             groupDiv.className = "group";
 
-            groupTitle.textContent = `第 ${groupNumber} 组座位图`; // 动态更新标题
+            const groupTitle = document.createElement("div");
+            groupTitle.className = "group-title";
+            groupTitle.textContent = `第 ${g} 组`;
+            groupDiv.appendChild(groupTitle);
 
             for (let r = 1; r <= rowsPerGroup; r++) {
                 const rowDiv = document.createElement("div");
                 rowDiv.className = "row";
 
                 for (let s = 1; s <= seatsPerRow; s++) {
-                    const seatId = `${groupNumber}-${r}-${s}`;
+                    const seatId = `${g}-${r}-${s}`;
                     const seatDiv = document.createElement("div");
                     seatDiv.className = "seat";
                     seatDiv.id = seatId;
-                    seatDiv.textContent = ""; // 初始不显示座位号
+                    seatDiv.textContent = seatId.split('-').join(''); // 简化显示
                     rowDiv.appendChild(seatDiv);
 
                     // 保存到座位映射
                     seatMap[seatId] = seatDiv;
                 }
+
                 groupDiv.appendChild(rowDiv);
             }
 
             seatingChart.appendChild(groupDiv);
-            console.log("生成的座位映射:", seatMap);
         }
-
-        // 页面加载时默认生成第 1 组座位表
-        document.addEventListener("DOMContentLoaded", () => {
-            generateGroupSeats(3); // 默认生成第 3 组
-        });
 
         // 按名字查找座位并高亮
         function findSeatByName() {
             const nameInput = document.getElementById("nameInput").value.trim();
-            console.log("输入的名字:", nameInput);
-
             const record = seatData.find(record => record.name === nameInput);
-            console.log("匹配的记录:", record);
 
             // 清除之前的高亮
             clearHighlights();
 
             if (record) {
                 const seatId = record.seat;
-                console.log("找到的座位 ID:", seatId);
-
                 const seatDiv = seatMap[seatId];
-                console.log("对应的 DOM 元素:", seatDiv);
-
                 if (seatDiv) {
                     seatDiv.classList.add("selected");
-                    seatDiv.textContent = record.name; // 显示名字
                     alert(`姓名：${record.name}, 座位：${seatId}`);
-                } else {
-                    console.error(`未找到座位 ID 为 ${seatId} 的 DOM 元素`);
                 }
             } else {
                 alert("未找到该姓名的座位信息！");
+            }
+        }
+
+        // 按座位编号查找并高亮
+        function findSeatByNumber() {
+            const seatInput = document.getElementById("seatInput").value.trim();
+            const seatDiv = seatMap[seatInput];
+
+            // 清除之前的高亮
+            clearHighlights();
+
+            if (seatDiv) {
+                seatDiv.classList.add("selected");
+                alert(`找到座位：${seatInput}`);
+            } else {
+                alert("未找到该座位，请检查输入！");
             }
         }
 
@@ -226,11 +224,9 @@
         function clearHighlights() {
             for (let seat in seatMap) {
                 seatMap[seat].classList.remove("selected");
-                seatMap[seat].textContent = ""; // 清空显示内容
             }
         }
     </script>
 </body>
 </html>
-          
-
+        
