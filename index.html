@@ -168,7 +168,7 @@
                     const seatDiv = document.createElement("div");
                     seatDiv.className = "seat";
                     seatDiv.id = seatId;
-                    seatDiv.textContent = seatId.split('-').join(''); // 不显示座位坐标
+                    seatDiv.textContent = ""; // seatId.split('-').join('');  // 不显示座位坐标
                     rowDiv.appendChild(seatDiv);
 
                     // 保存到座位映射
