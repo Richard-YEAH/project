@@ -150,7 +150,9 @@
         // 动态生成座位图
         const seatingChart = document.getElementById("seatingChart");
         const seatMap = {}; // 记录每个座位的 HTML 元素，便于查找和更新
-
+	const groupTitle = document.getElementById("groupTitle"); 
+	    groupTitle.textContent = '第 ${groupNumber} 组座位图'; 
+	    
         for (let g = 1; g <= groups; g++) {
             const groupDiv = document.createElement("div");
             groupDiv.className = "group";
