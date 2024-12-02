@@ -67,164 +67,170 @@
 
         // 示例数据：名字和座位号对应
         const seatData = [
-             { name: "王绿洲", seat: "3-1-1" },
-{ name: "孟令超", seat: "3-1-2" },
-{ name: "于昊", seat: "3-1-3" },
-{ name: "陈龙林", seat: "3-1-4" },
-{ name: "崔波", seat: "3-1-5" },
-{ name: "李勋", seat: "3-1-6" },
-{ name: "牛世杰", seat: "3-1-7" },
-{ name: "邓洪波", seat: "3-1-8" },
-{ name: "冮悉凡", seat: "3-1-9" },
-{ name: "李志辉", seat: "4-1-1" },
-{ name: "陈楠", seat: "4-1-2" },
-{ name: "陈楠", seat: "4-1-2" },
-{ name: "杜云志", seat: "4-1-3" },
-{ name: "杜云志", seat: "4-1-3" },
-{ name: "李清华", seat: "4-1-4" },
-{ name: "王魁", seat: "4-1-5" },
-{ name: "孟祥凯", seat: "4-1-6" },
-{ name: "韩万松", seat: "4-1-7" },
-{ name: "郭家成", seat: "4-1-8" },
-{ name: "李明", seat: "4-1-9" },
-{ name: "卜小沛", seat: "5-1-1" },
-{ name: "张亚臣", seat: "5-1-2" },
-{ name: "许应富", seat: "5-1-3" },
-{ name: "许应富", seat: "5-1-3" },
-{ name: "杨立", seat: "5-1-4" },
-{ name: "刘忠贤", seat: "5-1-5" },
-{ name: "庄严", seat: "5-1-6" },
-{ name: "徐志强", seat: "5-1-7" },
-{ name: "徐志强", seat: "5-1-7" },          	
-{ name: "赵博", seat: "5-1-8" },
-{ name: "王瑞雪", seat: "5-1-9" },
-{ name: "王瑞雪", seat: "5-1-9" },
-{ name: "王瑞雪", seat: "5-1-9" },
-{ name: "王瑞雪", seat: "5-1-9" },
-{ name: "王瑞雪", seat: "5-1-9" },
-{ name: "张春燕", seat: "5-2-1" },
-{ name: "张春燕", seat: "5-2-1" },
-{ name: "张春燕", seat: "5-2-1" },
-{ name: "张春燕", seat: "5-2-1" },
-{ name: "于利", seat: "5-2-2" },
-{ name: "于利", seat: "5-2-2" },
-{ name: "喻建鹏", seat: "5-2-3" },
-{ name: "贺东", seat: "5-2-4" },
-{ name: "杨烈志", seat: "5-2-5" },
-{ name: "杨烈志", seat: "5-2-5" },
-{ name: "权博", seat: "5-2-6" },
-{ name: "赵晓静", seat: "5-2-7" },
-{ name: "赵晓静", seat: "5-2-7" },
-{ name: "赵晓静", seat: "5-2-7" },
-{ name: "李郡", seat: "5-2-8" },
-{ name: "李辉", seat: "5-2-9" },
-{ name: "杨光", seat: "5-3-1" },
-{ name: "赵爽", seat: "5-3-2" },
-{ name: "刘振业", seat: "6-1-1" },
-{ name: "李福祥", seat: "6-1-2" },
-{ name: "邵立成", seat: "6-1-3" },
-{ name: "杨勇志", seat: "6-1-4" },
-{ name: "朴希财", seat: "6-1-5" },
-{ name: "朴希财", seat: "6-1-5" },
-{ name: "王天", seat: "6-1-6" },
-{ name: "王旭", seat: "6-1-7" },
-{ name: "李凤跃", seat: "6-1-8" },
-{ name: "李凤跃", seat: "6-1-8" },
-{ name: "李凤跃", seat: "6-1-8" },
-{ name: "李凤跃", seat: "6-1-8" },
-{ name: "高守军", seat: "6-1-9" },
-{ name: "崔彬", seat: "6-2-1" },
-{ name: "赵雪齐", seat: "6-2-2" },
-{ name: "王立群", seat: "6-2-3" },
-{ name: "刘新州", seat: "6-2-4" },
-{ name: "张丽杰", seat: "6-2-5" },
-{ name: "王玲莉", seat: "6-2-6" },
-{ name: "王玲莉", seat: "6-2-6" },
-{ name: "隋欣", seat: "6-2-7" },
-{ name: "郑杰", seat: "6-2-8" },
-{ name: "郑永刚", seat: "6-2-9" },
+            { name: "王绿洲", seat: "3-1-1" },
+            { name: "孟令超", seat: "3-1-2" },
+            { name: "于昊", seat: "3-1-3" },
+            { name: "陈龙林", seat: "3-1-4" },
+            { name: "崔波", seat: "3-1-5" },
+            { name: "李勋", seat: "3-1-6" },
+            { name: "牛世杰", seat: "3-1-7" },
+            { name: "邓洪波", seat: "3-1-8" },
+            { name: "冮悉凡", seat: "3-1-9" },
+            { name: "李志辉", seat: "4-1-1" },
+            { name: "陈楠", seat: "4-1-2" },
+            { name: "陈楠", seat: "4-1-2" },
+            { name: "杜云志", seat: "4-1-3" },
+            { name: "杜云志", seat: "4-1-3" },
+            { name: "李清华", seat: "4-1-4" },
+            { name: "王魁", seat: "4-1-5" },
+            { name: "孟祥凯", seat: "4-1-6" },
+            { name: "韩万松", seat: "4-1-7" },
+            { name: "郭家成", seat: "4-1-8" },
+            { name: "李明", seat: "4-1-9" },
+            { name: "卜小沛", seat: "5-1-1" },
+            { name: "张亚臣", seat: "5-1-2" },
+            { name: "许应富", seat: "5-1-3" },
+            { name: "许应富", seat: "5-1-3" },
+            { name: "杨立", seat: "5-1-4" },
+            { name: "刘忠贤", seat: "5-1-5" },
+            { name: "庄严", seat: "5-1-6" },
+            { name: "徐志强", seat: "5-1-7" },
+            { name: "徐志强", seat: "5-1-7" },          	
+            { name: "赵博", seat: "5-1-8" },
+            { name: "王瑞雪", seat: "5-1-9" },
+            { name: "王瑞雪", seat: "5-1-9" },
+            { name: "王瑞雪", seat: "5-1-9" },
+            { name: "王瑞雪", seat: "5-1-9" },
+            { name: "王瑞雪", seat: "5-1-9" },
+            { name: "张春燕", seat: "5-2-1" },
+            { name: "张春燕", seat: "5-2-1" },
+            { name: "张春燕", seat: "5-2-1" },
+            { name: "张春燕", seat: "5-2-1" },
+            { name: "于利", seat: "5-2-2" },
+            { name: "于利", seat: "5-2-2" },
+            { name: "喻建鹏", seat: "5-2-3" },
+            { name: "贺东", seat: "5-2-4" },
+            { name: "杨烈志", seat: "5-2-5" },
+            { name: "杨烈志", seat: "5-2-5" },
+            { name: "权博", seat: "5-2-6" },
+            { name: "赵晓静", seat: "5-2-7" },
+            { name: "赵晓静", seat: "5-2-7" },
+            { name: "赵晓静", seat: "5-2-7" },
+            { name: "李郡", seat: "5-2-8" },
+            { name: "李辉", seat: "5-2-9" },
+            { name: "杨光", seat: "5-3-1" },
+            { name: "赵爽", seat: "5-3-2" },
+            { name: "刘振业", seat: "6-1-1" },
+            { name: "李福祥", seat: "6-1-2" },
+            { name: "邵立成", seat: "6-1-3" },
+            { name: "杨勇志", seat: "6-1-4" },
+            { name: "朴希财", seat: "6-1-5" },
+            { name: "朴希财", seat: "6-1-5" },
+            { name: "王天", seat: "6-1-6" },
+            { name: "王旭", seat: "6-1-7" },
+            { name: "李凤跃", seat: "6-1-8" },
+            { name: "李凤跃", seat: "6-1-8" },
+            { name: "李凤跃", seat: "6-1-8" },
+            { name: "李凤跃", seat: "6-1-8" },
+            { name: "高守军", seat: "6-1-9" },
+            { name: "崔彬", seat: "6-2-1" },
+            { name: "赵雪齐", seat: "6-2-2" },
+            { name: "王立群", seat: "6-2-3" },
+            { name: "刘新州", seat: "6-2-4" },
+            { name: "张丽杰", seat: "6-2-5" },
+            { name: "王玲莉", seat: "6-2-6" },
+            { name: "王玲莉", seat: "6-2-6" },
+            { name: "隋欣", seat: "6-2-7" },
+            { name: "郑杰", seat: "6-2-8" },
+            { name: "郑永刚", seat: "6-2-9" },
         ];
 
         // 动态生成座位图
-function generateGroupSeats(groupNumber) {
-    const seatingChart = document.getElementById("seatingChart");
-    if (!seatingChart) {
-        console.error("未找到 #seatingChart 容器！");
-        return;
-    }
+        function generateGroupSeats(groupNumber) {
+            const seatingChart = document.getElementById("seatingChart");
+            if (!seatingChart) {
+                console.error("未找到 #seatingChart 容器！");
+                return;
+            }
 
-    const groupTitle = document.getElementById("groupTitle");
-    if (!groupTitle) {
-        console.error("未找到 #groupTitle 容器！");
-        return;
-    }
+            const groupTitle = document.getElementById("groupTitle");
+            if (!groupTitle) {
+                console.error("未找到 #groupTitle 容器！");
+                return;
+            }
 
-    seatingChart.innerHTML = ""; // 清空现有座位表
-    const groupDiv = document.createElement("div");
-    groupDiv.className = "group";
+            seatingChart.innerHTML = ""; // 清空现有座位表
+            const groupDiv = document.createElement("div");
+            groupDiv.className = "group";
 
-    groupTitle.textContent = `第 ${groupNumber} 组座位图`; // 动态更新标题
+            groupTitle.textContent = `第 ${groupNumber} 组座位图`; // 动态更新标题
 
-    for (let r = 1; r <= rowsPerGroup; r++) {
-        const rowDiv = document.createElement("div");
-        rowDiv.className = "row";
+            for (let r = 1; r <= rowsPerGroup; r++) {
+                const rowDiv = document.createElement("div");
+                rowDiv.className = "row";
 
-        for (let s = 1; s <= seatsPerRow; s++) {
-            const seatId = `${groupNumber}-${r}-${s}`;
-            const seatDiv = document.createElement("div");
-            seatDiv.className = "seat";
-            seatDiv.id = seatId;
-            seatDiv.textContent = ""; // 初始不显示座位号
-            rowDiv.appendChild(seatDiv);
+                for (let s = 1; s <= seatsPerRow; s++) {
+                    const seatId = `${groupNumber}-${r}-${s}`;
+                    const seatDiv = document.createElement("div");
+                    seatDiv.className = "seat";
+                    seatDiv.id = seatId;
+                    seatDiv.textContent = ""; // 初始不显示座位号
+                    rowDiv.appendChild(seatDiv);
 
-            // 保存到座位映射
-            seatMap[seatId] = seatDiv;
+                    // 保存到座位映射
+                    seatMap[seatId] = seatDiv;
+                }
+                groupDiv.appendChild(rowDiv);
+            }
+
+            seatingChart.appendChild(groupDiv);
         }
-        groupDiv.appendChild(rowDiv);
-    }
-
-    seatingChart.appendChild(groupDiv);
-}
-
 
         // 页面加载时默认生成第 1 组座位表
-document.addEventListener("DOMContentLoaded", () => {
-    generateGroupSeats(1); // 默认显示第 1 组
-});
+        document.addEventListener("DOMContentLoaded", () => {
+            generateGroupSeats(1); // 默认显示第 1 组
+        });
 
         // 按名字查找座位并高亮
-function findSeatByName() {
-    const nameInput = document.getElementById("nameInput").value.trim();
-    const record = seatData.find(record => record.name === nameInput);
+        function findSeatByName() {
+            const nameInput = document.getElementById("nameInput").value.trim();
+            console.log("输入的名字:", nameInput);
 
-    // 清除之前的高亮
-    clearHighlights();
+            const record = seatData.find(record => record.name === nameInput);
+            console.log("匹配的记录:", record);
 
-    if (record) {
-        const seatId = record.seat;
-        const seatDiv = seatMap[seatId];
+            // 清除之前的高亮
+            clearHighlights();
 
-        if (seatDiv) {
-            seatDiv.classList.add("selected");
-            seatDiv.textContent = record.name; // 显示名字
-            alert(`姓名：${record.name}, 座位：${seatId}`);
-        } else {
-            console.error(`未找到座位 ID 为 ${seatId} 的元素`);
+            if (record) {
+                const seatId = record.seat;
+                console.log("找到的座位 ID:", seatId);
+
+                const seatDiv = seatMap[seatId];
+                console.log("对应的 DOM 元素:", seatDiv);
+
+                if (seatDiv) {
+                    seatDiv.classList.add("selected");
+                    seatDiv.textContent = record.name; // 显示名字
+                    alert(`姓名：${record.name}, 座位：${seatId}`);
+                } else {
+                    console.error(`未找到座位 ID 为 ${seatId} 的 DOM 元素`);
+                }
+            } else {
+                alert("未找到该姓名的座位信息！");
+            }
         }
-    } else {
-        alert("未找到该姓名的座位信息！");
-    }
-}
 
         // 清除所有高亮
-function clearHighlights() {
-    for (let seat in seatMap) {
-        seatMap[seat].classList.remove("selected");
-        seatMap[seat].textContent = ""; // 清空显示内容
-    }
-}
+        function clearHighlights() {
+            for (let seat in seatMap) {
+                seatMap[seat].classList.remove("selected");
+                seatMap[seat].textContent = ""; // 清空显示内容
+            }
+        }
     </script>
 </body>
 </html>
+
 
 
