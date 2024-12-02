@@ -12,13 +12,13 @@
         .seating-chart {
             display: flex;
             flex-wrap: nowrap; /* 横向布局，不换行 */
-            justify-content: space-around; /* 每组间距均匀 */
-            gap: 50px; /* 组之间的间距 */
+            overflow-x: auto; /* 添加横向滚动条 */
+            gap: 30px; /* 组之间的间距 */
         }
         .group {
             border: 1px solid #ccc;
             padding: 10px;
-            width: 150px; /* 每组宽度 */
+            min-width: 320px; /* 每组宽度 */
             display: flex;
             flex-direction: column; /* 保证组内元素垂直排列 */
             align-items: center;
@@ -36,17 +36,17 @@
         }
         .seat {
             width: 30px;
-            height: 30px;
+            height: 25px;
             border: 1px solid #ccc;
             display: flex;
             align-items: center;
             justify-content: center;
             background-color: #f0f0f0;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 11px;
         }
         .seat.selected {
-            background-color: #32CD32; /* 选中座位颜色 */
+            background-color: #00205B; /* 选中座位颜色 */
             color: white;
         }
     </style>
