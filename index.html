@@ -11,16 +11,16 @@
         }
         .seating-chart {
             display: flex;
-            flex-wrap: nowrap; /* 横向布局，不换行 */
-            overflow-x: auto; /* 添加横向滚动条 */
-            gap: 25px; /* 组之间的间距 */
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            gap: 25px;
         }
         .group {
             border: 1px solid #ccc;
             padding: 10px;
-            min-width: 180px; /* 每组宽度 */
+            min-width: 180px;
             display: flex;
-            flex-direction: column; /* 保证组内元素垂直排列 */
+            flex-direction: column;
             align-items: center;
         }
         .group-title {
@@ -31,8 +31,8 @@
         .row {
             display: flex;
             margin-bottom: 10px;
-            justify-content: center; /* 座位居中对齐 */
-            gap: 5px; /* 座位之间的间距 */
+            justify-content: center;
+            gap: 5px;
         }
         .seat {
             width: 15px;
@@ -46,7 +46,7 @@
             font-size: 0px;
         }
         .seat.selected {
-            background-color: #00205B; /* 选中座位颜色 */
+            background-color: #00205B;
             color: white;
         }
     </style>
@@ -184,11 +184,12 @@
             }
 
             seatingChart.appendChild(groupDiv);
+            console.log("生成的座位映射:", seatMap);
         }
 
         // 页面加载时默认生成第 1 组座位表
         document.addEventListener("DOMContentLoaded", () => {
-            generateGroupSeats(1); // 默认显示第 1 组
+            generateGroupSeats(3); // 默认生成第 3 组
         });
 
         // 按名字查找座位并高亮
@@ -231,6 +232,5 @@
     </script>
 </body>
 </html>
-
-
+          
 
