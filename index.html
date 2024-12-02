@@ -164,11 +164,11 @@
                 rowDiv.className = "row";
 
                 for (let s = 1; s <= seatsPerRow; s++) {
-                    const seatId = ``;
+                    const seatId = `${g}-${r}-${s}`;
                     const seatDiv = document.createElement("div");
                     seatDiv.className = "seat";
                     seatDiv.id = seatId;
-                    seatDiv.textContent = seatId.split('-').join(''); // 简化显示
+                    seatDiv.textContent = ""; // 不显示座位坐标
                     rowDiv.appendChild(seatDiv);
 
                     // 保存到座位映射
