@@ -203,15 +203,17 @@ function findSeatByName() {
     if (record) {
         const seatId = record.seat;
         const seatDiv = seatMap[seatId];
-        
+
         if (seatDiv) {
             seatDiv.classList.add("selected");
             seatDiv.textContent = record.name; // 显示名字
             alert(`姓名：${record.name}, 座位：${seatId}`);
-             }
         } else {
-            alert("未找到该姓名的座位信息！");
+            console.error(`未找到座位 ID 为 ${seatId} 的元素`);
         }
+    } else {
+        alert("未找到该姓名的座位信息！");
+    }
 }
 
         // 清除所有高亮
