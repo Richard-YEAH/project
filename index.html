@@ -172,10 +172,10 @@ function generateGroupSeats(groupNumber) {
 seatMap[seatId] = seatDiv;
         }
 
-        groupDiv.appendChild(rowDiv);
+    groupDiv.appendChild(rowDiv);
     }
 
-    seatingChart.appendChild(groupDiv);
+seatingChart.appendChild(groupDiv);
 }
         // 页面加载时默认生成第 1 组座位表
         document.addEventListener("DOMContentLoaded", () => {
