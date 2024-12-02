@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>座位查找程序</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        input, button { padding: 10px; margin: 5px; }
+        #result { margin-top: 20px; font-size: 18px; color: green; }
+    </style>
+</head>
+<body>
+    <h1>座位查找程序</h1>
+    <label for="nameInput">输入名字：</label>
+    <input type="text" id="nameInput" placeholder="请输入名字">
+    <button onclick="findSeat()">查找座位</button>
+    <div id="result"></div>
+
+    <script>
+        // 示例座位表数据
+        const seatTable = [
+          	{ name: "赵博", seat: "5-1-8" },
+		{ name: "王瑞雪", seat: "5-1-9" },
+		{ name: "王瑞雪", seat: "5-1-9" },
+		{ name: "王瑞雪", seat: "5-1-9" },
+		{ name: "王瑞雪", seat: "5-1-9" },
+		{ name: "王瑞雪", seat: "5-1-9" },
+		{ name: "张春燕", seat: "5-2-1" },
+		{ name: "张春燕", seat: "5-2-1" },
+		{ name: "张春燕", seat: "5-2-1" },
+		{ name: "张春燕", seat: "5-2-1" },
+		{ name: "于利", seat: "5-2-2" },
+		{ name: "于利", seat: "5-2-2" },
+		{ name: "喻建鹏", seat: "5-2-3" },
+		{ name: "贺东", seat: "5-2-4" },
+		{ name: "杨烈志", seat: "5-2-5" },
+		{ name: "杨烈志", seat: "5-2-5" },
+		{ name: "权博", seat: "5-2-6" },
+		{ name: "赵晓静", seat: "5-2-7" },
+		{ name: "赵晓静", seat: "5-2-7" },
+		{ name: "赵晓静", seat: "5-2-7" },
+		{ name: "李郡", seat: "5-2-8" },
+		{ name: "李辉", seat: "5-2-9" },
+		{ name: "杨光", seat: "5-3-1" },
+		{ name: "赵爽", seat: "5-3-2" },
+		{ name: "刘振业", seat: "6-1-1" },
+		{ name: "李福祥", seat: "6-1-2" },
+		{ name: "邵立成", seat: "6-1-3" },
+		{ name: "杨勇志", seat: "6-1-4" },
+		{ name: "朴希财", seat: "6-1-5" },
+		{ name: "朴希财", seat: "6-1-5" },
+		{ name: "王天", seat: "6-1-6" },
+		{ name: "王旭", seat: "6-1-7" },
+		{ name: "李凤跃", seat: "6-1-8" },
+		{ name: "李凤跃", seat: "6-1-8" },
+		{ name: "李凤跃", seat: "6-1-8" },
+		{ name: "李凤跃", seat: "6-1-8" },
+		{ name: "高守军", seat: "6-1-9" },
+		{ name: "崔彬", seat: "6-2-1" },
+		{ name: "赵雪齐", seat: "6-2-2" },
+		{ name: "王立群", seat: "6-2-3" },
+		{ name: "刘新州", seat: "6-2-4" },
+		{ name: "张丽杰", seat: "6-2-5" },
+		{ name: "王玲莉", seat: "6-2-6" },
+		{ name: "王玲莉", seat: "6-2-6" },
+		{ name: "隋欣", seat: "6-2-7" },
+		{ name: "郑杰", seat: "6-2-8" },
+		{ name: "郑永刚", seat: "6-2-9" },
+
+
+ ];
+
+        function findSeat() {
+            const nameInput = document.getElementById("nameInput").value.trim();
+            const resultDiv = document.getElementById("result");
+
+            // 查找名字对应的座位
+            const record = seatTable.find(record => record.name === nameInput);
+
+            if (record) {
+                resultDiv.innerText = `姓名：${record.name}, 座位：${record.seat}`;
+            } else {
+                resultDiv.innerText = "未找到该姓名的座位信息。";
+                resultDiv.style.color = "red";
+            }
+        }
+    </script>
+</body>
+</html>
