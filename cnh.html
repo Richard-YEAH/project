@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>横排座位示意图</title>
     <style>
+        h1 {
+            font-size: 24px; 
+        }
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
@@ -52,14 +55,13 @@
     </style>
 </head>
 <body>
-    <h1>2024凯斯纽荷兰经销商大会
-        （面对大屏幕从左往右依次为1-6组）</h1>
+    <h1>2024凯斯纽荷兰经销商大会</h1>
     <label for="nameInput">输入名字：</label>
     <input type="text" id="nameInput" placeholder="请输入名字" onkeypress="handleKeyPress(event)">
     <button onclick="findSeatByName()">查找座位</button>
     
 
-    <h2>座位示意图</h2>
+    <h2>座位示意图（面对大屏从左往右为1-6组）</h2>
     <div id="seatingChart" class="seating-chart"></div>
 
     <script>
