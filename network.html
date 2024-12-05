@@ -6,6 +6,17 @@
     <title>随机网络节点图</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* 视窗高度 */
+            background-color: #f4f4f9; /* 可选：设置背景色 */
+        }
+        svg {
+            border: 1px solid #ccc; /* 可选：添加边框以显示区域 */
+        }
         .node circle {
             fill: #69b3a2;
             stroke: #555;
@@ -18,11 +29,13 @@
     </style>
 </head>
 <body>
-    <svg width="800" height="600"></svg>
+    <div id="graph-container">
+        <svg width="800" height="600"></svg>
+    </div>
     <script>
         // 设置节点数量和连接数
-        const numNodes = 20; // 节点数
-        const numLinks = 30; // 边数
+        const numNodes = 65; // 节点数
+        const numLinks = 40; // 边数
 
         // 随机生成节点和边数据
         const nodes = Array.from({ length: numNodes }, (_, i) => ({ id: i }));
@@ -56,7 +69,7 @@
             .selectAll("circle")
             .data(nodes)
             .enter().append("circle")
-            .attr("r", 8)
+            .attr("r", 3)
             .call(d3.drag()
                 .on("start", dragStarted)
                 .on("drag", dragged)
