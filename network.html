@@ -3,71 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>随机网络节点图</title>
+    <title>屏幕范围内的网络图</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         body {
             margin: 0;
+            overflow: hidden; /* 防止出现滚动条 */
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh; /* 视窗高度 */
-            background-color: #f4f4f9; /* 可选：设置背景色 */
+            height: 100vh; /* 保持页面高度充满窗口 */
+            background-color: #f4f4f9; /* 背景色可选 */
         }
         svg {
-            border: 1px solid #ccc; /* 可选：添加边框以显示区域 */
-        }
-        .node circle {
-            fill: #69b3a2;
-            stroke: #555;
-            stroke-width: 1.5px;
-        }
-        .link {
-            stroke: #999;
-            stroke-opacity: 0.6;
+            display: block; /* 移除默认内边距 */
         }
     </style>
 </head>
 <body>
-    <div id="graph-container">
-        <svg width="2000" height="1000"></svg>
-    </div>
+    <svg></svg>
     <script>
-        // 设置节点数量和连接数
-        const numNodes = 65; // 节点数
-        const numLinks = 40; // 边数
+        // 动态设置宽度和高度为窗口大小
+        const width = window.innerWidth;
+        const height = window.innerHeight;
 
-        // 随机生成节点和边数据
-        const nodes = Array.from({ length: numNodes }, (_, i) => ({ id: i }));
+        const svg = d3.select("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        const numNodes = 65; // 节点数量
+        const numLinks = 100; // 边数量
+
+        // 随机生成节点数据
+        const nodes = Array.from({ length: numNodes }, (_, i) => ({
+            id: i
+        }));
+
+        // 确保连接边生成在范围内
         const links = Array.from({ length: numLinks }, () => ({
             source: Math.floor(Math.random() * numNodes),
             target: Math.floor(Math.random() * numNodes)
-        const links = [];
-            for (let i = 0; i < numNodes; i++) {
-                // 确保每个节点至少有一条边
-                links.push({
-                    source: i,
-                    target: Math.floor(Math.random() * numNodes)
-                });
-            }
-            // 添加额外随机边
-            for (let i = 0; i < numLinks; i++) {
-                links.push({
-                    source: Math.floor(Math.random() * numNodes),
-                    target: Math.floor(Math.random() * numNodes)
-                });
-            }
-
-        // 创建SVG画布
-        const svg = d3.select("svg");
-        const width = +svg.attr("width");
-        const height = +svg.attr("height");
+        }));
 
         // 创建力导向图
         const simulation = d3.forceSimulation(nodes)
             .force("link", d3.forceLink(links).distance(100).id(d => d.id))
-            .force("charge", d3.forceManyBody().strength(-300))
-            .force("center", d3.forceCenter(width / 2, height / 2));
+            .force("charge", d3.forceManyBody().strength(-200))
+            .force("center", d3.forceCenter(width / 2, height / 2))
+            .on("tick", ticked);
 
         // 绘制边
         const link = svg.append("g")
@@ -75,7 +58,8 @@
             .selectAll("line")
             .data(links)
             .enter().append("line")
-            .attr("class", "link");
+            .attr("stroke", "#999")
+            .attr("stroke-opacity", 0.6);
 
         // 绘制节点
         const node = svg.append("g")
@@ -83,27 +67,25 @@
             .selectAll("circle")
             .data(nodes)
             .enter().append("circle")
-            .attr("r", 3)
+            .attr("r", 3) // 节点半径
+            .attr("fill", "#69b3a2")
             .call(d3.drag()
                 .on("start", dragStarted)
                 .on("drag", dragged)
                 .on("end", dragEnded));
 
-        // 添加标签
-        node.append("title").text(d => `Node ${d.id}`);
-
-        // 更新图位置
-        simulation.on("tick", () => {
+        // 确保节点和边位置在范围内
+        function ticked() {
             link
-                .attr("x1", d => d.source.x)
-                .attr("y1", d => d.source.y)
-                .attr("x2", d => d.target.x)
-                .attr("y2", d => d.target.y);
+                .attr("x1", d => Math.max(0, Math.min(width, d.source.x)))
+                .attr("y1", d => Math.max(0, Math.min(height, d.source.y)))
+                .attr("x2", d => Math.max(0, Math.min(width, d.target.x)))
+                .attr("y2", d => Math.max(0, Math.min(height, d.target.y)));
 
             node
-                .attr("cx", d => d.x)
-                .attr("cy", d => d.y);
-        });
+                .attr("cx", d => d.x = Math.max(10, Math.min(width - 10, d.x)))
+                .attr("cy", d => d.y = Math.max(10, Math.min(height - 10, d.y)));
+        }
 
         // 拖拽事件处理
         function dragStarted(event, d) {
