@@ -38,21 +38,25 @@
             id: i
         }));
 
-        // 随机生成边数据，确保没有自连接
+        // 随机生成边数据，确保无重复连接和自连接
         const links = [];
-        for (let i = 0; i < numLinks; i++) {
-            let source, target;
-            do {
-                source = Math.floor(Math.random() * numNodes);
-                target = Math.floor(Math.random() * numNodes);
-            } while (source === target); // 避免自连接
-            links.push({ source, target });
+        const edgeSet = new Set(); // 用于检查是否重复
+        while (links.length < numLinks) {
+            const source = Math.floor(Math.random() * numNodes);
+            const target = Math.floor(Math.random() * numNodes);
+            if (source !== target) {
+                const edgeKey = `${source}-${target}`; // 唯一标识边
+                if (!edgeSet.has(edgeKey)) {
+                    edgeSet.add(edgeKey);
+                    links.push({ source, target });
+                }
+            }
         }
 
         // 创建力导向图
         const simulation = d3.forceSimulation(nodes)
             .force("link", d3.forceLink(links).distance(100).id(d => d.id))
-            .force("charge", d3.forceManyBody().strength(-100))
+            .force("charge", d3.forceManyBody().strength(-200))
             .force("center", d3.forceCenter(width / 2, height / 2))
             .on("tick", ticked);
 
