@@ -3,27 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>屏幕范围内的网络图</title>
+    <title>设置节点最小边数的网络图</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         body {
             margin: 0;
-            overflow: hidden; /* 防止出现滚动条 */
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh; /* 保持页面高度充满窗口 */
-            background-color: #f4f4f9; /* 背景色可选 */
+            height: 100vh;
+            background-color: #f4f4f9;
         }
         svg {
-            display: block; /* 移除默认内边距 */
+            display: block;
         }
     </style>
 </head>
 <body>
     <svg></svg>
     <script>
-        // 动态设置宽度和高度为窗口大小
         const width = window.innerWidth;
         const height = window.innerHeight;
 
@@ -32,31 +31,26 @@
             .attr("height", height);
 
         const numNodes = 65; // 节点数量
-        const numLinks = 100; // 边数量
-        const minEdges = 3 //每个节点最小边数
-        
-        // 随机生成节点数据
+        const minEdges = 2; // 每个节点的最小边数
+
+        // 初始化节点数据
         const nodes = Array.from({ length: numNodes }, (_, i) => ({
             id: i
         }));
 
+        // 创建边数据，确保每个节点至少有 minEdges 条边
         const links = [];
 
+        // 确保每个节点有最小边数
         for (let i = 0; i < numNodes; i++) {
-            for (let j = 0; j < minEdges; j++){
-                const target = (i + j + 1) % numNodes;
+            for (let j = 0; j < minEdges; j++) {
+                const target = (i + j + 1) % numNodes; // 确保连接到其他节点
                 links.push({
                     source: i,
                     target: target
                 });
             }
         }
-        
-        // 确保连接边生成在范围内
-        const links = Array.from({ length: numLinks }, () => ({
-            source: Math.floor(Math.random() * numNodes),
-            target: Math.floor(Math.random() * numNodes)
-        }));
 
         // 创建力导向图
         const simulation = d3.forceSimulation(nodes)
@@ -80,7 +74,7 @@
             .selectAll("circle")
             .data(nodes)
             .enter().append("circle")
-            .attr("r", 3) // 节点半径
+            .attr("r", 3)
             .attr("fill", "#69b3a2")
             .call(d3.drag()
                 .on("start", dragStarted)
