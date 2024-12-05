@@ -42,7 +42,21 @@
         const links = Array.from({ length: numLinks }, () => ({
             source: Math.floor(Math.random() * numNodes),
             target: Math.floor(Math.random() * numNodes)
-        }));
+        const links = [];
+            for (let i = 0; i < numNodes; i++) {
+                // 确保每个节点至少有一条边
+                links.push({
+                    source: i,
+                    target: Math.floor(Math.random() * numNodes)
+                });
+            }
+            // 添加额外随机边
+            for (let i = 0; i < numLinks; i++) {
+                links.push({
+                    source: Math.floor(Math.random() * numNodes),
+                    target: Math.floor(Math.random() * numNodes)
+                });
+            }
 
         // 创建SVG画布
         const svg = d3.select("svg");
