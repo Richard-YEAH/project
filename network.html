@@ -33,12 +33,25 @@
 
         const numNodes = 65; // 节点数量
         const numLinks = 100; // 边数量
-
+        const minEdges = 3 //每个节点最小边数
+        
         // 随机生成节点数据
         const nodes = Array.from({ length: numNodes }, (_, i) => ({
             id: i
         }));
 
+        const links = [];
+
+        for (let i = 0; i < numNodes; i++) {
+            for (let j = 0; j < minEdges; j++){
+                const target = (i + j + 1) % numNodes;
+                links.push({
+                    source: i,
+                    target: target
+                });
+            }
+        }
+        
         // 确保连接边生成在范围内
         const links = Array.from({ length: numLinks }, () => ({
             source: Math.floor(Math.random() * numNodes),
