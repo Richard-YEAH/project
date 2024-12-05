@@ -30,6 +30,38 @@
             .attr("width", width)
             .attr("height", height);
 
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设置节点最小边数的网络图</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+        svg {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <svg></svg>
+    <script>
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        const svg = d3.select("svg")
+            .attr("width", width)
+            .attr("height", height);
+
         const numNodes = 65; // 节点数量
         const minEdges = 2; // 每个节点的最小边数
 
@@ -51,6 +83,8 @@
                 });
             }
         }
+
+
 
         // 创建力导向图
         const simulation = d3.forceSimulation(nodes)
