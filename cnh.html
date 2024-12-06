@@ -198,37 +198,8 @@
 
             seatingChart.appendChild(groupDiv);
         }
-/*
-        function findSeatByName() {
-            const nameInput = document.getElementById("nameInput").value.trim();
-            const record = seatData.find(record => record.name === nameInput);
 
-            // 清除之前的高亮
-            clearHighlights();
-
-            if (record) {
-                // 遍历多个座位并高亮显示
-                record.seats.forEach(seatId => {
-                    const seatDiv = seatMap[seatId];
-                    if (seatDiv) {
-                        seatDiv.classList.add("selected");
-                    }
-                });
-
-                // 获取第一个座位所在组的信息，滚动到该组
-                const firstSeatDiv = seatMap[record.seats[0]];
-                const groupDiv = firstSeatDiv.closest(".group");
-                if (groupDiv) {
-                    groupDiv.scrollIntoView({ behavior: "smooth", block: "center" });
-                }
-
-                alert(`姓名：${record.name}, 座位：${record.seats.join(", ")}`);
-            } else {
-                alert("未找到该姓名的座位信息！");
-            }
-        }
-*/        
-       // 按名字查找座位并高亮
+        // 按名字查找座位并高亮
         function findSeatByName() {
             const nameInput = document.getElementById("nameInput").value.trim();
             const record = seatData.find(record => record.name === nameInput);
