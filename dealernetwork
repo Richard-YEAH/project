@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国内城市网络图</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+        svg {
+            display: block;
+        }
+        text {
+            font-size: 8px;
+            fill: #333;
+        }
+    </style>
+</head>
+<body>
+    <svg></svg>
+    <script>
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        const svg = d3.select("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        // 输入城市和区域列表
+        const cities = [
+            "七台河市", "鸡西市", "双鸭山市", "牡丹江市", "哈尔滨市", "绥化市", "伊春市",
+            "黑河市", "大兴安岭地区", "克山县", "克东县", "佳木斯市", "鹤岗市",
+            "齐齐哈尔市", "大庆市", "黑龙江农垦", "白山市", "通化市", "延边朝鲜族自治州",
+            "长春市", "四平市", "辽源市", "松原市", "白城市", "辽宁省", "铁岭市",
+            "鄂伦春自治旗", "莫力达瓦达斡尔自治旗", "呼伦贝尔市", "海拉尔农垦",
+            "大兴安岭农垦", "科尔沁右翼中旗", "突泉县", "扎兰屯市", "兴安盟",
+            "兴安盟农垦", "阿荣旗", "张掖市", "酒泉市", "武威市", "金昌市", "宁夏回族自治区",
+            "青海省", "西藏自治区", "博尔塔拉蒙古自治州", "塔城市", "裕民县", "额敏县",
+            "托里县", "和丰县", "伊犁哈萨克自治州", "奎屯市", "阿勒泰市", "克拉玛依市",
+            "石河子市", "巴音郭楞蒙古自治州", "哈密市", "乌鲁木齐市", "昌吉回族自治州",
+            "喀什市", "乌苏市", "阿克苏市", "克孜勒苏柯尔柯自治州", "吐鲁番市",
+            "和田市", "河北省", "北京市", "天津市", "开封市", "商丘市", "郑州市",
+            "洛阳市", "平顶山市", "新乡市", "驻马店市", "信阳市", "湖北省", "阿拉善盟",
+            "鄂尔多斯市", "巴彦淖尔市", "包头市", "乌海市", "赤峰市", "锡林郭勒盟",
+            "呼和浩特市", "通辽市", "乌兰察布市", "鄂托克旗", "大同市", "怀仁市",
+            "临汾市", "运城市", "陕西省", "榆林市", "渭南市", "华阴市", "阜阳市",
+            "蚌埠市", "宿州市", "安徽省", "亳州市", "淮北市", "江苏省", "东营市",
+            "滨州市", "淄博市", "潍坊市", "烟台市", "临沂市", "菏泽市", "青岛市",
+            "上海市", "广东省", "广西壮族自治区", "成都市", "德阳市", "绵阳市", "眉山市",
+            "西昌市", "海南省", "四川省", "德宏傣族景颇族自治州", "保山市", "玉溪市",
+            "楚雄市", "红河哈尼族彝族自治州", "文山壮族苗族自治州", "曲靖市",
+            "西双版纳傣族自治州", "昆明市", "乌兰巴托市"
+        ];
+
+        // 省会城市列表
+        const capitals = [
+            "上海市", "哈尔滨市", "北京市", "长春市", "沈阳市", "南京市",
+            "郑州市", "武汉市", "广州市", "成都市", "昆明市", "拉萨市", "呼和浩特市",
+            "西安市", "兰州市", "乌鲁木齐市", "海口市", "南宁市"
+        ];
+
+        // 为每个城市生成随机坐标并标记是否为省会
+        const nodes = cities.map((name, index) => ({
+            id: index,
+            name,
+            isCapital: capitals.includes(name),
+            x: Math.random() * (width - 100) + 50,
+            y: Math.random() * (height - 100) + 50
+        }));
+
+        // 添加边：确保省会城市至少指向上海
+        const links = [];
+        const shanghaiIndex = nodes.findIndex(node => node.name === "上海市");
+
+        nodes.forEach(node => {
+            if (node.isCapital && node.id !== shanghaiIndex) {
+                links.push({ source: node.id, target: shanghaiIndex });
+            }
+        });
+
+        // 添加随机额外边
+        const extraEdges = 100; // 额外边数量
+        for (let i = 0; i < extraEdges; i++) {
+            const source = Math.floor(Math.random() * nodes.length);
+            const target = Math.floor(Math.random() * nodes.length);
+            if (source !== target) {
+                links.push({ source, target });
+            }
+        }
+
+        // 绘图：力导向图
+        const simulation = d3.forceSimulation(nodes)
+            .force("link", d3.forceLink(links).id(d => d.id).distance(100))
+            .force("charge", d3.forceManyBody().strength(-200))
+            .force("center", d3.forceCenter(width / 2, height / 2))
+            .on("tick", ticked);
+
+        // 绘制边
+        const link = svg.append("g")
+            .attr("class", "links")
+            .selectAll("line")
+            .data(links)
+            .enter().append("line")
+            .attr("stroke", "#999")
+            .attr("stroke-opacity", 0.6);
+
+        // 绘制节点
+        const node = svg.append("g")
+            .attr("class", "nodes")
+            .selectAll("circle")
+            .data(nodes)
+            .enter().append("circle")
+            .attr("r", d => (d.isCapital ? 5 : 3)) // 省会城市节点大一点
+            .attr("fill", d => (d.name === "上海市" ? "#ff0000" : "#69b3a2"))
+            .call(d3.drag()
+                .on("start", dragStarted)
+                .on("drag", dragged)
+                .on("end", dragEnded));
+
+        // 添加城市名称
+        svg.append("g")
+            .selectAll("text")
+            .data(nodes)
+            .enter().append("text")
+            .attr("x", d => d.x + 10)
+            .attr("y", d => d.y)
+            .text(d => d.name);
+
+        // 位置更新
+        function ticked() {
+            link
+                .attr("x1", d => d.source.x)
+                .attr("y1", d => d.source.y)
+                .attr("x2", d => d.target.x)
+                .attr("y2", d => d.target.y);
+
+            node
+                .attr("cx", d => d.x)
+                .attr("cy", d => d.y);
+
+            svg.selectAll("text")
+                .attr("x", d => d.x + 10)
+                .attr("y", d => d.y);
+        }
+
+        // 拖拽事件
+        function dragStarted(event, d) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+
+        function dragged(event, d) {
+            d.fx = event.x;
+            d.fy = event.y;
+        }
+
+        function dragEnded(event, d) {
+            if (!event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
+    </script>
+</body>
+</html>
