@@ -3,19 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>国内城市网络图</title>
+    <title>城市网络节点图</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         body {
             margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             background-color: #f4f4f9;
+            overflow: hidden;
         }
         svg {
             display: block;
+            margin: 0 auto;
         }
         text {
             font-size: 8px;
@@ -24,69 +22,214 @@
     </style>
 </head>
 <body>
-    <svg></svg>
+    <svg width="2800" height="1800"></svg>
     <script>
-        const width = window.innerWidth;
-        const height = window.innerHeight;
+        const width = 2800;
+        const height = 1800;
 
-        const svg = d3.select("svg")
-            .attr("width", width)
-            .attr("height", height);
+        const svg = d3.select("svg");
 
-        // 输入城市和区域列表
+        // 城市列表和坐标数据
         const cities = [
-            "七台河市", "鸡西市", "双鸭山市", "牡丹江市", "哈尔滨市", "绥化市", "伊春市",
-            "黑河市", "大兴安岭地区", "克山县", "克东县", "佳木斯市", "鹤岗市",
-            "齐齐哈尔市", "大庆市", "黑龙江农垦", "白山市", "通化市", "延边朝鲜族自治州",
-            "长春市", "四平市", "辽源市", "松原市", "白城市", "辽宁省", "铁岭市",
-            "鄂伦春自治旗", "莫力达瓦达斡尔自治旗", "呼伦贝尔市", "海拉尔农垦",
-            "大兴安岭农垦", "科尔沁右翼中旗", "突泉县", "扎兰屯市", "兴安盟",
-            "兴安盟农垦", "阿荣旗", "张掖市", "酒泉市", "武威市", "金昌市", "宁夏回族自治区",
-            "青海省", "西藏自治区", "博尔塔拉蒙古自治州", "塔城市", "裕民县", "额敏县",
-            "托里县", "和丰县", "伊犁哈萨克自治州", "奎屯市", "阿勒泰市", "克拉玛依市",
-            "石河子市", "巴音郭楞蒙古自治州", "哈密市", "乌鲁木齐市", "昌吉回族自治州",
-            "喀什市", "乌苏市", "阿克苏市", "克孜勒苏柯尔柯自治州", "吐鲁番市",
-            "和田市", "河北省", "北京市", "天津市", "开封市", "商丘市", "郑州市",
-            "洛阳市", "平顶山市", "新乡市", "驻马店市", "信阳市", "湖北省", "阿拉善盟",
-            "鄂尔多斯市", "巴彦淖尔市", "包头市", "乌海市", "赤峰市", "锡林郭勒盟",
-            "呼和浩特市", "通辽市", "乌兰察布市", "鄂托克旗", "大同市", "怀仁市",
-            "临汾市", "运城市", "陕西省", "榆林市", "渭南市", "华阴市", "阜阳市",
-            "蚌埠市", "宿州市", "安徽省", "亳州市", "淮北市", "江苏省", "东营市",
-            "滨州市", "淄博市", "潍坊市", "烟台市", "临沂市", "菏泽市", "青岛市",
-            "上海市", "广东省", "广西壮族自治区", "成都市", "德阳市", "绵阳市", "眉山市",
-            "西昌市", "海南省", "四川省", "德宏傣族景颇族自治州", "保山市", "玉溪市",
-            "楚雄市", "红河哈尼族彝族自治州", "文山壮族苗族自治州", "曲靖市",
-            "西双版纳傣族自治州", "昆明市", "乌兰巴托市"
+            { "name": "七台河市", "x": 131.003, "y": 45.771, "province": "黑龙江省", "isCapital": false },
+    { "name": "鸡西市", "x": 130.969, "y": 45.295, "province": "黑龙江省", "isCapital": false },
+    { "name": "双鸭山市", "x": 131.159, "y": 46.646, "province": "黑龙江省", "isCapital": false },
+    { "name": "牡丹江市", "x": 129.633, "y": 44.552, "province": "黑龙江省", "isCapital": false },
+    { "name": "哈尔滨市", "x": 126.642, "y": 45.756, "province": "黑龙江省", "isCapital": true },
+    { "name": "绥化市", "x": 126.968, "y": 46.652, "province": "黑龙江省", "isCapital": false },
+    { "name": "伊春市", "x": 128.841, "y": 47.727, "province": "黑龙江省", "isCapital": false },
+    { "name": "黑河市", "x": 127.528, "y": 50.245, "province": "黑龙江省", "isCapital": false },
+    { "name": "大兴安岭地区", "x": 124.711, "y": 52.335, "province": "黑龙江省", "isCapital": false },
+    { "name": "克山县", "x": 125.874, "y": 48.034, "province": "黑龙江省", "isCapital": false },
+    { "name": "克东县", "x": 126.249, "y": 48.037, "province": "黑龙江省", "isCapital": false },
+    { "name": "佳木斯市", "x": 130.318, "y": 46.799, "province": "黑龙江省", "isCapital": false },
+    { "name": "鹤岗市", "x": 130.297, "y": 47.349, "province": "黑龙江省", "isCapital": false },
+    { "name": "齐齐哈尔市", "x": 123.957, "y": 47.342, "province": "黑龙江省", "isCapital": false },
+    { "name": "大庆市", "x": 125.103, "y": 46.589, "province": "黑龙江省", "isCapital": false },
+    { "name": "黑龙江农垦", "x": 126.532, "y": 45.808, "province": "黑龙江省", "isCapital": false },
+    { "name": "白山市", "x": 126.424, "y": 41.939, "province": "吉林省", "isCapital": false },
+    { "name": "通化市", "x": 125.939, "y": 41.728, "province": "吉林省", "isCapital": false },
+    { "name": "延边朝鲜族自治州", "x": 129.515, "y": 42.906, "province": "吉林省", "isCapital": false },
+    { "name": "长春市", "x": 125.324, "y": 43.886, "province": "吉林省", "isCapital": true },
+    { "name": "四平市", "x": 124.350, "y": 43.166, "province": "吉林省", "isCapital": false },
+    { "name": "辽源市", "x": 125.145, "y": 42.902, "province": "吉林省", "isCapital": false },
+    { "name": "松原市", "x": 124.825, "y": 45.141, "province": "吉林省", "isCapital": false },
+    { "name": "白城市", "x": 122.838, "y": 45.619, "province": "吉林省", "isCapital": false },
+    { "name": "辽宁省", "x": 123.429, "y": 41.796, "province": "辽宁省", "isCapital": true },
+    { "name": "铁岭市", "x": 123.726, "y": 42.223, "province": "辽宁省", "isCapital": false },
+    { "name": "鄂伦春自治旗", "x": 123.725, "y": 50.590, "province": "内蒙古自治区", "isCapital": false },
+    { "name": "莫力达瓦达斡尔族自治旗", "x": 124.519, "y": 48.478, "province": "内蒙古自治区", "isCapital": false },
+    { "name": "呼伦贝尔市", "x": 119.765, "y": 49.211, "province": "内蒙古自治区", "isCapital": false },
+    { "name": "海拉尔农垦", "x": 119.736, "y": 49.212, "province": "内蒙古自治区", "isCapital": false },
+    { "name": "大兴安岭农垦", "x": 124.711, "y": 52.335, "province": "黑龙江省", "isCapital": false },
+    { "name": "科尔沁右翼中旗", "x": 121.472, "y": 45.059, "province": "内蒙古自治区", "isCapital": false },
+    { "name": "突泉县", "x": 121.564, "y": 45.381, "province": "内蒙古自治区", "isCapital": false },
+    { "name": "扎兰屯市", "x": 122.737, "y": 48.013, "province": "内蒙古自治区", "isCapital": false },
+    { "name": "兴安盟", "x": 122.067, "y": 46.077, "province": "内蒙古自治区", "isCapital": false },
+    { "name": "兴安盟农垦", "x": 122.067, "y": 46.077, "province": "内蒙古自治区", "isCapital": false },
+    { "name": "阿荣旗", "x": 123.459, "y": 48.125, "province": "内蒙古自治区", "isCapital": false },
+    { "name": "张掖市", "x": 100.449818, "y": 38.925875, "province": "甘肃省", "isCapital": false },
+    { "name": "酒泉市", "x": 98.494483, "y": 39.73241, "province": "甘肃省", "isCapital": false },
+    { "name": "武威市", "x": 102.634697, "y": 37.929996, "province": "甘肃省", "isCapital": false },
+    { "name": "金昌市", "x": 102.188043, "y": 38.520089, "province": "甘肃省", "isCapital": false },
+    { "name": "宁夏回族自治区", "x": 106.278179, "y": 38.46637, "province": "宁夏回族自治区", "isCapital": true },
+    { "name": "青海省", "x": 101.778916, "y": 36.623178, "province": "青海省", "isCapital": true },
+    { "name": "西藏自治区", "x": 91.132212, "y": 29.660361, "province": "西藏自治区", "isCapital": true },
+    { "name": "博尔塔拉蒙古自治州", "x": 82.06665, "y": 44.90597, "province": "新疆维吾尔自治区", "isCapital": false },
+    { "name": "塔城市", "x": 82.980316, "y": 46.745364, "province": "新疆维吾尔自治区", "isCapital": false },
+    { "name": "裕民县", "x": 82.982157, "y": 46.202781, "province": "新疆维吾尔自治区", "isCapital": false },
+    { "name": "额敏县", "x": 83.622118, "y": 46.522555, "province": "新疆维吾尔自治区", "isCapital": false },
+    { "name": "托里县", "x": 83.605479, "y": 45.936114, "province": "新疆维吾尔自治区", "isCapital": false },
+    { "name": "和丰县", "x": 86.150969, "y": 44.301183, "province": "新疆维吾尔自治区", "isCapital": false },
+    { "name": "伊犁哈萨克自治州", "x": 81.324136, "y": 43.916823, "province": "新疆维吾尔自治区", "isCapital": false },
+    { "name": "奎屯市", "x": 84.901602, "y": 44.423445, "province": "新疆维吾尔自治区", "isCapital": false },
+    { "name": "塔城地区", "x": 82.985732, "y": 46.746301, "province": "新疆维吾尔自治区", "isCapital": false },
+    { "name": "阿勒泰市", "x": 88.138743, "y": 47.848911, "province": "新疆维吾尔自治区", "isCapital": false },
+    { "name": "克拉玛依市", "x": 84.889207, "y": 45.579888, "province": "新疆维吾尔自治区", "isCapital": false },
+    { "name": "石河子市", "x": 86.080602, "y": 44.305886, "province": "新疆维吾尔自治区", "isCapital": false },
+    { "name": "巴音郭楞蒙古自治州", "x": 86.145298, "y": 41.764115, "province": "新疆维吾尔自治区", "isCapital": false },
+    { "name": "哈密市", "x": 93.514916, "y": 42.818501, "province": "新疆维吾尔自治区", "isCapital": false },
+    { "name": "乌鲁木齐市", "x": 87.617733, "y": 43.792818, "province": "新疆维吾尔自治区", "isCapital": true },
+    { "name": "昌吉回族自治州", "x": 87.308224, "y": 44.011182, "province": "新疆维吾尔自治区", "isCapital": false },
+    { "name": "喀什市", "x": 75.989755, "y": 39.4704, "province": "新疆维吾尔自治区", "isCapital": false },
+    { "name": "乌苏市", "x": 84.677624, "y": 44.430115, "province": "新疆维吾尔自治区", "isCapital": false },
+    { "name": "阿克苏市", "x": 80.263387, "y": 41.167548, "province": "新疆维吾尔自治区", "isCapital": false },
+    { "name": "克孜勒苏柯尔克孜自治州", "x": 76.167819, "y": 39.714526, "province": "新疆维吾尔自治区", "isCapital": false },
+    { "name": "吐鲁番市", "x": 89.189655, "y": 42.951384, "province": "新疆维吾尔自治区", "isCapital": false },
+    { "name": "和田市", "x": 79.922211, "y": 37.114157, "province": "新疆维吾尔自治区", "isCapital": false },
+    { "name": "河北省", "x": 114.502461, "y": 38.045474, "province": "河北省", "isCapital": true },
+    { "name": "北京市", "x": 116.405285, "y": 39.904989, "province": "北京市", "isCapital": true },
+    { "name": "天津市", "x": 117.190182, "y": 39.125596, "province": "天津市", "isCapital": true },
+    { "name": "开封市", "x": 114.341447, "y": 34.797049, "province": "河南省", "isCapital": false },
+    { "name": "商丘市", "x": 115.650497, "y": 34.437054, "province": "河南省", "isCapital": false },
+    { "name": "郑州市", "x": 113.665412, "y": 34.757975, "province": "河南省", "isCapital": true },
+    { "name": "洛阳市", "x": 112.434468, "y": 34.663041, "province": "河南省", "isCapital": false },
+    { "name": "平顶山市", "x": 113.192661, "y": 33.766169, "province": "河南省", "isCapital": false },
+    { "name": "新乡市", "x": 113.9268, "y": 35.303004, "province": "河南省", "isCapital": false },
+    { "name": "驻马店市", "x": 114.024736, "y": 33.017842, "province": "河南省", "isCapital": false },
+    { "name": "信阳市", "x": 114.075031, "y": 32.123274, "province": "河南省", "isCapital": false },
+    { "name": "湖北省", "x": 114.298572, "y": 30.584355, "province": "湖北省", "isCapital": true },
+    { "name": "阿拉善盟", "x": 105.706422, "y": 38.844814, "province": "内蒙古自治区", "isCapital": false },
+    { "name": "鄂尔多斯市", "x": 109.99029, "y": 39.817179, "province": "内蒙古自治区", "isCapital": false },
+    { "name": "巴彦淖尔市", "x": 107.416959, "y": 40.757402, "province": "内蒙古自治区", "isCapital": false },
+    { "name": "包头市", "x": 109.840405, "y": 40.658168, "province": "内蒙古自治区", "isCapital": false },
+    { "name": "乌海市", "x": 106.825563, "y": 39.673734, "province": "内蒙古自治区", "isCapital": false },
+    { "name": "赤峰市", "x": 118.956806, "y": 42.275317, "province": "内蒙古自治区", "isCapital": false },
+    { "name": "锡林郭勒盟", "x": 116.048222, "y": 43.933454, "province": "内蒙古自治区", "isCapital": false },
+    { "name": "呼和浩特市", "x": 111.670801, "y": 40.818311, "province": "内蒙古自治区", "isCapital": true },
+    { "name": "通辽市", "x": 122.263119, "y": 43.617429, "province": "内蒙古自治区", "isCapital": false },
+    { "name": "乌兰察布市", "x": 113.114543, "y": 41.034126, "province": "内蒙古自治区", "isCapital": false },
+    { "name": "鄂托克旗", "x": 107.976478, "y": 39.095752, "province": "内蒙古自治区", "isCapital": false },
+    { "name": "鄂托克前旗", "x": 107.48172, "y": 38.183257, "province": "内蒙古自治区", "isCapital": false },
+    { "name": "杭锦旗", "x": 108.736324, "y": 39.831789, "province": "内蒙古自治区", "isCapital": false },
+    { "name": "大同市", "x": 113.295259, "y": 40.09031, "province": "山西省", "isCapital": false },
+    { "name": "怀仁市", "x": 113.100285, "y": 39.82079, "province": "山西省", "isCapital": false },
+    { "name": "临汾市", "x": 111.517973, "y": 36.08415, "province": "山西省", "isCapital": false },
+    { "name": "运城市", "x": 111.003957, "y": 35.022778, "province": "山西省", "isCapital": false },
+    { "name": "陕西省", "x": 108.948024, "y": 34.263161, "province": "陕西省", "isCapital": true },
+    { "name": "榆林市", "x": 109.741193, "y": 38.290162, "province": "陕西省", "isCapital": false },
+    { "name": "渭南市", "x": 109.502882, "y": 34.499381, "province": "陕西省", "isCapital": false },
+    { "name": "华阴市", "x": 110.08952, "y": 34.565359, "province": "陕西省", "isCapital": false },
+    { "name": "阜阳市", "x": 115.814204, "y": 32.890124, "province": "安徽省", "isCapital": false },
+    { "name": "蚌埠市", "x": 117.363228, "y": 32.939667, "province": "安徽省", "isCapital": false },
+    { "name": "宿州市", "x": 116.984084, "y": 33.633891, "province": "安徽省", "isCapital": false },
+    { "name": "安徽省", "x": 117.283042, "y": 31.86119, "province": "安徽省", "isCapital": true },
+    { "name": "亳州市", "x": 115.782939, "y": 33.869338, "province": "安徽省", "isCapital": false },
+    { "name": "淮北市", "x": 116.794664, "y": 33.971707, "province": "安徽省", "isCapital": false },
+    { "name": "东辛农场", "x": 120.467, "y": 32.542, "province": "江苏省", "isCapital": false },
+    { "name": "新洋农场", "x": 120.467, "y": 32.542, "province": "江苏省", "isCapital": false },
+    { "name": "淮海农场", "x": 120.467, "y": 32.542, "province": "江苏省", "isCapital": false },
+    { "name": "岗埠农场", "x": 119.038165, "y": 34.588542, "province": "江苏省", "isCapital": false },
+    { "name": "云台农场", "x": 119.221611, "y": 34.567951, "province": "江苏省", "isCapital": false },
+    { "name": "宝应湖农场", "x": 119.455, "y": 33.23, "province": "江苏省", "isCapital": false },
+    { "name": "三河农场", "x": 120.467, "y": 32.542, "province": "江苏省", "isCapital": false },
+    { "name": "白马湖农场", "x": 119.455, "y": 33.23, "province": "江苏省", "isCapital": false },
+    { "name": "复兴圩农场", "x": 120.467, "y": 32.542, "province": "江苏省", "isCapital": false },
+    { "name": "黄海农场", "x": 120.467, "y": 32.542, "province": "江苏省", "isCapital": false },
+    { "name": "滨淮农场", "x": 120.467, "y": 32.542, "province": "江苏省", "isCapital": false },
+    { "name": "临海农场", "x": 120.467, "y": 32.542, "province": "江苏省", "isCapital": false },
+    { "name": "新曹农场", "x": 120.467, "y": 32.542, "province": "江苏省", "isCapital": false },
+    { "name": "东坝头农场", "x": 120.467, "y": 32.542, "province": "江苏省", "isCapital": false },
+    { "name": "南通农场", "x": 120.894291, "y": 31.980172, "province": "江苏省", "isCapital": false },
+    { "name": "五图河农场", "x": 120.467, "y": 32.542, "province": "江苏省", "isCapital": false },
+    { "name": "大中农场", "x": 120.467, "y": 32.542, "province": "江苏省", "isCapital": false },
+    { "name": "方强农场", "x": 120.467, "y": 32.542, "province": "江苏省", "isCapital": false },
+    { "name": "洪泽湖农场", "x": 118.869, "y": 33.294, "province": "江苏省", "isCapital": false },
+    { "name": "江苏省", "x": 118.763232, "y": 32.061707, "province": "江苏省", "isCapital": true },
+    { "name": "徐州市", "x": 117.284124, "y": 34.205768, "province": "江苏省", "isCapital": false },
+    { "name": "镇江市", "x": 119.425836, "y": 32.187849, "province": "江苏省", "isCapital": false },
+    { "name": "扬州市", "x": 119.421003, "y": 32.393159, "province": "江苏省", "isCapital": false },
+    { "name": "泰州市", "x": 119.915176, "y": 32.484882, "province": "江苏省", "isCapital": false },
+    { "name": "苏州市", "x": 120.619585, "y": 31.299379, "province": "江苏省", "isCapital": false },
+    { "name": "南京市", "x": 118.796877, "y": 32.060255, "province": "江苏省", "isCapital": true },
+    { "name": "常州市", "x": 119.973987, "y": 31.810689, "province": "江苏省", "isCapital": false },
+    { "name": "无锡市", "x": 120.31191, "y": 31.491169, "province": "江苏省", "isCapital": false },
+    { "name": "东营市", "x": 118.674767, "y": 37.43365, "province": "山东省", "isCapital": false },
+    { "name": "滨州市", "x": 117.970703, "y": 37.38199, "province": "山东省", "isCapital": false },
+    { "name": "淄博市", "x": 118.054927, "y": 36.813487, "province": "山东省", "isCapital": false },
+    { "name": "潍坊市", "x": 119.161756, "y": 36.706774, "province": "山东省", "isCapital": false },
+    { "name": "烟台市", "x": 121.447935, "y": 37.463822, "province": "山东省", "isCapital": false },
+    { "name": "临沂市", "x": 118.356448, "y": 35.104672, "province": "山东省", "isCapital": false },
+    { "name": "菏泽市", "x": 115.480656, "y": 35.23375, "province": "山东省", "isCapital": false },
+    { "name": "青岛市", "x": 120.38264, "y": 36.067082, "province": "山东省", "isCapital": false },
+    { "name": "上海市", "x": 121.473701, "y": 31.230416, "province": "上海市", "isCapital": true },
+    { "name": "广东省", "x": 113.280637, "y": 23.125178, "province": "广东省", "isCapital": true },
+    { "name": "广西壮族自治区", "x": 108.320004, "y": 22.82402, "province": "广西壮族自治区", "isCapital": true },
+    { "name": "成都市", "x": 104.06, "y": 30.67, "province": "四川", "isCapital": true },
+    { "name": "德阳市", "x": 104.37, "y": 31.13, "province": "四川", "isCapital": false },
+    { "name": "绵阳市", "x": 104.73, "y": 31.48, "province": "四川", "isCapital": false },
+    { "name": "眉山市", "x": 103.84, "y": 30.05, "province": "四川", "isCapital": false },
+    { "name": "西昌市", "x": 102.26, "y": 27.88, "province": "四川", "isCapital": false },
+    { "name": "玉溪市", "x": 102.55, "y": 24.35, "province": "云南", "isCapital": false },
+    { "name": "楚雄市", "x": 101.55, "y": 25.04, "province": "云南", "isCapital": false },
+    { "name": "红河哈尼族彝族自治州", "x": 103.38, "y": 23.37, "province": "云南", "isCapital": false },
+    { "name": "文山壮族苗族自治州", "x": 104.22, "y": 23.37, "province": "云南", "isCapital": false },
+    { "name": "曲靖市", "x": 103.79, "y": 25.5, "province": "云南", "isCapital": false },
+    { "name": "西双版纳傣族自治州", "x": 100.81, "y": 22.00, "province": "云南", "isCapital": false },
+    { "name": "昆明市", "x": 102.71, "y": 25.04, "province": "云南", "isCapital": true },
+    { "name": "乌兰巴托市", "x": 106.91, "y": 47.92, "province": "外国", "isCapital": true }
+            
         ];
 
-        // 省会城市列表
-        const capitals = [
-            "上海市", "哈尔滨市", "北京市", "长春市", "沈阳市", "南京市",
-            "郑州市", "武汉市", "广州市", "成都市", "昆明市", "拉萨市", "呼和浩特市",
-            "西安市", "兰州市", "乌鲁木齐市", "海口市", "南宁市"
-        ];
+        // 屏幕范围缩放函数
+        const xScale = d3.scaleLinear()
+            .domain([73, 135]) // 中国经度范围
+            .range([50, width - 50]);
+        const yScale = d3.scaleLinear()
+            .domain([18, 54]) // 中国纬度范围
+            .range([50, height - 50]);
 
-        // 为每个城市生成随机坐标并标记是否为省会
-        const nodes = cities.map((name, index) => ({
+        // 转换坐标到屏幕范围
+        const nodes = cities.map((city, index) => ({
             id: index,
-            name,
-            isCapital: capitals.includes(name),
-            x: Math.random() * (width - 100) + 50,
-            y: Math.random() * (height - 100) + 50
+            name: city.name,
+            isCapital: city.isCapital,
+            province: city.province,
+            x: xScale(city.x),
+            y: yScale(city.y)
         }));
 
-        // 添加边：确保省会城市至少指向上海
+        // 生成边：非省会指向省会，省会指向上海
         const links = [];
         const shanghaiIndex = nodes.findIndex(node => node.name === "上海市");
 
         nodes.forEach(node => {
             if (node.isCapital && node.id !== shanghaiIndex) {
+                // 省会城市指向上海
                 links.push({ source: node.id, target: shanghaiIndex });
+            } else if (!node.isCapital) {
+                // 非省会指向其所在省份的省会
+                const provinceCapital = nodes.find(
+                    n => n.isCapital && n.province === node.province
+                );
+                if (provinceCapital) {
+                    links.push({ source: node.id, target: provinceCapital.id });
+                }
             }
         });
 
         // 添加随机额外边
-        const extraEdges = 100; // 额外边数量
+        const extraEdges = 50;
         for (let i = 0; i < extraEdges; i++) {
             const source = Math.floor(Math.random() * nodes.length);
             const target = Math.floor(Math.random() * nodes.length);
@@ -95,10 +238,10 @@
             }
         }
 
-        // 绘图：力导向图
+        // 创建力导向图
         const simulation = d3.forceSimulation(nodes)
-            .force("link", d3.forceLink(links).id(d => d.id).distance(100))
-            .force("charge", d3.forceManyBody().strength(-200))
+            .force("link", d3.forceLink(links).id(d => d.id).distance(150))
+            .force("charge", d3.forceManyBody().strength(-100))
             .force("center", d3.forceCenter(width / 2, height / 2))
             .on("tick", ticked);
 
@@ -117,7 +260,7 @@
             .selectAll("circle")
             .data(nodes)
             .enter().append("circle")
-            .attr("r", d => (d.isCapital ? 5 : 3)) // 省会城市节点大一点
+            .attr("r", d => (d.isCapital ? 8 : 5)) // 省会城市节点更大
             .attr("fill", d => (d.name === "上海市" ? "#ff0000" : "#69b3a2"))
             .call(d3.drag()
                 .on("start", dragStarted)
@@ -131,9 +274,11 @@
             .enter().append("text")
             .attr("x", d => d.x + 10)
             .attr("y", d => d.y)
-            .text(d => d.name);
+            .text(d => d.name)
+            .attr("font-size", "8px")
+            .attr("fill", "#333");
 
-        // 位置更新
+        // 更新位置
         function ticked() {
             link
                 .attr("x1", d => d.source.x)
@@ -150,7 +295,7 @@
                 .attr("y", d => d.y);
         }
 
-        // 拖拽事件
+        // 拖拽事件处理
         function dragStarted(event, d) {
             if (!event.active) simulation.alphaTarget(0.3).restart();
             d.fx = d.x;
