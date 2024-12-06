@@ -225,7 +225,36 @@
                 alert("未找到该姓名的座位信息！");
             }
         }
+        function findSeats() {
+            const inputField = document.getElementById("inputField").value.trim();
+            const names = inputField.split(","); // 按逗号分隔输入的多个姓名
+            clearHighlights();
 
+            names.forEach(name => {
+                name = name.trim(); // 去除前后空格
+                let record = seatData.find(record => record.name === name); // 按姓名查找
+        if (!record) {
+            record = seatData.find(record => record.seat === name); // 按座位号查找
+        }
+
+        if (record) {
+            const seatId = record.seat;
+            const seatDiv = seatMap[seatId];
+            if (seatDiv) {
+                seatDiv.classList.add("selected");
+
+                const groupDiv = seatDiv.closest(".group"); 
+                if (groupDiv) {
+                    groupDiv.scrollIntoView({ behavior: "smooth", block: "center" });
+                }
+
+                alert(`姓名：${record.name}, 座位：${seatId}`);
+            }
+        } else {
+            alert(`未找到姓名：${name}`);
+        }
+    });
+}
         // 按座位编号查找并高亮
         function findSeatByNumber() {
             const seatInput = document.getElementById("seatInput").value.trim();
