@@ -267,16 +267,6 @@
                 .on("drag", dragged)
                 .on("end", dragEnded));
 
-        // 添加城市名称
-        svg.append("g")
-            .selectAll("text")
-            .data(nodes)
-            .enter().append("text")
-            .attr("x", d => d.x + 10)
-            .attr("y", d => d.y)
-            .text(d => d.name)
-            .attr("font-size", "8px")
-            .attr("fill", "#333");
 
         // 更新位置
         function ticked() {
