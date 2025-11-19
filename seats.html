@@ -98,7 +98,7 @@
         <!-- 前排座位（第一排） -->
         <div class="row-title">第一排</div>
         <div class="row">
-            <span class="row-label">1：</span>
+            <span class="row-label"></span>
             <div class="groups-wrapper">
                 <!-- 第一组：11个座位 -->
                 <div class="group">
@@ -154,7 +154,7 @@
             
             const rowLabel = document.createElement('span');
             rowLabel.className = 'row-label';
-            rowLabel.textContent = `第${row}排：`;
+            rowLabel.textContent = `${row}：`;
             rowDiv.appendChild(rowLabel);
             
             const groupsWrapper = document.createElement('div');
