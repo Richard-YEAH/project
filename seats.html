@@ -41,10 +41,10 @@
             font-weight: bold;
         }
         .group {
-            display: flex;
-            justify-content: center; /* 组内座位水平居中 */
-            flex: 1; /* 三组平均分配宽度，确保前后排宽度一致 */
-            min-width: 0; /* 避免内容撑开宽度不均 */
+            display: inline-block;
+            width: 30%; /* 三组平均分配宽度（可根据需要调整） */
+            text-align: center; /* 组内座位水平居中 */
+            margin: 0 1.5%; /* 组之间的间隔 */
         }
         /* 后排座位默认样式（宽度25px） */
         .seat {
